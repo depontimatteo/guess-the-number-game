@@ -18,6 +18,7 @@ public class Main {
         ConfigurableApplicationContext context
                 = new ClassPathXmlApplicationContext(CONFIG_LOCATION);
 
+        // get numberGenerator bean from application context (as blueprint in python flask)
         NumberGenerator numberGenerator
                 = context.getBean("numberGenerator", NumberGenerator.class);
 
@@ -27,8 +28,11 @@ public class Main {
 
         log.info("number = {}", number);
 
-        // close context (container)
+        // get game bean from application context
+        Game game = context.getBean(Game.class);
+        game.reset();
 
+        // close context (container)
         context.close();
     }
 }

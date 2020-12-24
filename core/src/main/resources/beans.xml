@@ -5,5 +5,8 @@
            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="numberGenerator" class="maculade.guessthenumbergamecore.NumberGeneratorImpl" />
+    <bean id="Game" class="maculade.guessthenumbergamecore.GameImpl">
+        <property name="numberGenerator" ref="numberGenerator" />
+    </bean>
 
 </beans>
