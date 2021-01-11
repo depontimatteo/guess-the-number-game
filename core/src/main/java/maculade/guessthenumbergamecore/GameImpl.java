@@ -3,6 +3,8 @@ package maculade.guessthenumbergamecore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.PostConstruct;
+
 public class GameImpl implements Game {
 
     // constants
@@ -17,6 +19,23 @@ public class GameImpl implements Game {
     private int biggest;
     private int remainingGuesses;
     private boolean validNumberRange = true;
+
+    // init methods, executed automatically from spring beans
+    @PostConstruct
+    @Override
+    public void reset() {
+        smallest = 0;
+        guess = 0;
+        remainingGuesses = guessCount;
+        biggest = numberGenerator.getMaxNumber();
+        number = numberGenerator.next();
+        log.debug("the number is {}", number);
+
+    }
+
+    public void preDestroy() {
+        log.info("in game predestroy");
+    }
 
     // constructors
     public void setNumberGenerator(NumberGenerator numberGenerator){
@@ -53,16 +72,7 @@ public class GameImpl implements Game {
         return remainingGuesses;
     }
 
-    @Override
-    public void reset() {
-        smallest = 0;
-        guess = 0;
-        remainingGuesses = guessCount;
-        biggest = numberGenerator.getMaxNumber();
-        number = numberGenerator.next();
-        log.debug("the number is {}", number);
 
-    }
 
     @Override
     public void check() {
